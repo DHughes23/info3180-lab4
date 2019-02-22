@@ -41,13 +41,13 @@ def upload():
     if request.method == 'POST':
         # Get file data and save to your uploads folder
         if form.validate_on_submit():
-            pic = form.File.data
-            filename = secure_filename(pic.filename)
-            pic.save(os.path.join(app.config['UPLOAD_CONFIG'], filename))
+            photo = request.files['photo']
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             flash('File Saved', 'success')
             return redirect(url_for('home'))
 
-    return render_template('upload.html')
+    return render_template('upload.html', form=form)
 
 
 @app.route('/login', methods=['POST', 'GET'])

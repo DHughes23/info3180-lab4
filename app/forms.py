@@ -1,8 +1,7 @@
 import os
 from flask_wtf import FlaskForm
-from wtforms import FileField
 from wtforms.validators import DataRequired
-from flask_wtf.file import FileRequired, FileAllowed
+from flask_wtf.file import FileRequired, FileAllowed, FileField
 
 class UploadForm(FlaskForm):
-    photo = FileField('image',validators=[FileRequired(),FileAllowed(['jpg', 'png'], "Only Pictures allowed")])
+    photo = FileField('Photo',validators=[FileRequired(),FileAllowed(['jpg', 'png'])])
