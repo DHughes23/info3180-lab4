@@ -74,6 +74,15 @@ def logout():
 # The functions below should be applicable to all Flask apps.
 ###
 
+
+def get_uploaded_images():
+    photos = []
+    rootdir = os.getcwd()
+    for files in os.walk(rootdir + '/app/static/uploads'):     
+        for file in files:
+            photos.append(os.path.join(file))
+    return(photos[2][1:])
+
 # Flash errors from the form if validation fails
 def flash_errors(form):
     for field, errors in form.errors.items():
@@ -83,6 +92,13 @@ def flash_errors(form):
                 error
 ), 'danger')
 
+@app.route('/files')
+def files():
+    if not session.get('logged_in'):
+        abort(401)
+    photos= get_uploaded_images()
+    return render_template('files.html',pics=photos)
+    
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):
     """Send your static text file."""
